@@ -1,8 +1,9 @@
 var config = {
   width: 800,
   height: 600,
-  backgroundColor: 15701790,
-  scene: [bootscreen, Level1, Level2, Level3],
+  parent: 'gameContainer',
+  transparent: true,
+  scene: [bootscreen, aboutscreen, Level1, Level2, Level3],
   pixelArt: true,
   physics: {
     default: 'arcade',
