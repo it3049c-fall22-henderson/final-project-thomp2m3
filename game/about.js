@@ -6,6 +6,8 @@ class aboutscreen extends Phaser.Scene {
   preload() {
     // Load Assets
     this.load.image('title', './assets/title.png');
+    
+    this.load.image('back-btn', './assets/back-btn-panel.png');
   }
 
   create() {
@@ -40,5 +42,19 @@ class aboutscreen extends Phaser.Scene {
       335,
       'Matthew Thompson, Samba Koita, Steele Shreve'
     );
+
+    // Back button, return to boot screen
+    const btnBack = this.add.image(width * .15, height * .15, 'back-btn');
+
+    btnBack.setY(445);
+    btnBack.setX(400);
+    btnBack.scale = .075;
+
+    // Return to boot on click, adjust color on hover
+    btnBack
+      .setInteractive(this.input.makePixelPerfect())
+      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+        this.scene.start('bootscreen');
+      });
   }
 }
