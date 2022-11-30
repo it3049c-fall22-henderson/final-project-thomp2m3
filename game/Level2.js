@@ -4,7 +4,7 @@ class Level2 extends Phaser.Scene {
   }
 
   preload() {
-    this.preload.image('background', './assets/level2BG.jpg');
+    this.load.image('background', './assets/level2BG.jpg');
   }
 
   create() {
