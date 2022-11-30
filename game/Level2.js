@@ -3,10 +3,12 @@ class Level2 extends Phaser.Scene {
     super('playGameL2');
   }
 
+  preload() {
+    this.preload.image('background', './assets/level2BG.jpg');
+  }
+
   create() {
-    // Change background and border color
-    var bg = document.getElementById('gameContainer');
-    bg.style.backgroundColor = '#000';
-    bg.style.border = '4px solid #EF971E';
+    // Add background image to canvas
+    var bg = this.add.image(400, 300, 'background');
   }
 }
