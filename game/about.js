@@ -48,6 +48,7 @@ class aboutscreen extends Phaser.Scene {
 
     btnBack.setY(445);
     btnBack.setX(400);
+    btnBack.setTint(0xEF971E);
     btnBack.scale = .25;
 
     // Return to boot on click, adjust color on hover
