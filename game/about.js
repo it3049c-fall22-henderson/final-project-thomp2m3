@@ -7,7 +7,7 @@ class aboutscreen extends Phaser.Scene {
     // Load Assets
     this.load.image('title', './assets/title.png');
     
-    this.load.image('back-btn', './assets/back-btn-panel.png');
+    this.load.image('back-btn', './assets/return-btn-panel.png');
   }
 
   create() {
@@ -48,7 +48,7 @@ class aboutscreen extends Phaser.Scene {
 
     btnBack.setY(445);
     btnBack.setX(400);
-    btnBack.scale = .075;
+    btnBack.scale = .25;
 
     // Return to boot on click, adjust color on hover
     btnBack
