@@ -66,13 +66,9 @@ class Level1 extends Phaser.Scene {
       this.coin.play('coin_anim', true);
     }
     //this.physics.add.collider(coin, player);
-    this.cameras.main.setBounds(
-      0,
-      0,
-      this.background.displayWidth,
-      this.background.displayHeight
-    );
-    this.cameras.main.startFollow(this.player);
+    this.cameras.main.setBounds(0, 0, this.width, 600, true, true, true, true);
+    this.physics.world.setBounds(0, 0, this.width, 600, true, true, true, true);
+    this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
   }
   update() {
     this.background.tilePositionX += 1;
