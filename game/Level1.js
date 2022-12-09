@@ -24,7 +24,13 @@ class Level1 extends Phaser.Scene {
 
   create() {
     // Add background image to canvas
-    this.background = this.add.tileSprite(0, 0, 1920, 600, 'background');
+    this.background = this.add.tileSprite(
+      0,
+      0,
+      Number.MAX_SAFE_INTEGER,
+      600,
+      'background'
+    );
     this.background.setOrigin(0, 0);
     //Add player and controls
     this.player = this.physics.add
@@ -66,13 +72,9 @@ class Level1 extends Phaser.Scene {
       this.coin.play('coin_anim', true);
     }
     //this.physics.add.collider(coin, player);
-    this.cameras.main.setBounds(
-      0,
-      0,
-      this.background.displayWidth,
-      this.background.displayHeight
-    );
-    this.cameras.main.startFollow(this.player);
+    this.cameras.main.setBounds(0, 0, this.width, 600, true, true, true, true);
+    this.physics.world.setBounds(0, 0, this.width, 600, true, true, true, true);
+    this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
   }
   update() {
     this.background.tilePositionX += 1;
