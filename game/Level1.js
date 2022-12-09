@@ -11,8 +11,8 @@ class Level1 extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 16
   });
-    this.load.audio('gameplay', './assets/music/gameplay/gameplay.wav');
-    this.load.audio('gameover', './assets/music/gameover/gameover.wav');
+    //this.load.audio('gameplay', './assets/music/gameplay/gameplay.wav');
+    //this.load.audio('gameover', './assets/music/gameover/gameover.wav');
   }
 
   
@@ -20,12 +20,42 @@ class Level1 extends Phaser.Scene {
     // Add background image to canvas
     this.background = this.add.tileSprite(0, 0, 1920, 662, 'background');
     this.background.setOrigin (0, 0);
-    
     //Add player and controls
     this.player = this.physics.add.sprite(200,200, "player").setDisplaySize(80, 100);
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.player.setCollideWorldBounds(true);    
-    //this.createPlayer();
+    this.player.setCollideWorldBounds(true);
+    //score count
+    this.score = 0;
+    this.scoreLabel = this.add.bitmapText(15, 15, "pixelFont", "SCORE ", 30);
+    //coin animation
+    this.anims.create({
+      key: "coin_anim",
+      frames: this.anims.generateFrameNumbers("coin", {
+        start: 0,
+        end: 3
+      }),
+      frameRate: 10,
+      repeat: -1
+    }); 
+    
+    // this.anims.create({
+    //   key: "coin_glitter",
+    //   frames: this.anims.generateFrameNumbers("coin", {
+    //     start: 4,
+    //     end: 7
+    //   }),
+    //   frameRate: 20,
+    //   repeat: 0
+    // });
+    ////Generate random coins on map  
+    let coinsToSpawn = Phaser.Math.Between(5, 15);
+    for(let i = 0; i < coinsToSpawn; i++){
+       // Get Random y and x position
+       let yCord = Phaser.Math.Between(0, 600);
+       let xCord = Phaser.Math.Between(0, 900);
+       this.coin = this.add.sprite(xCord, yCord, "coin");
+       this.coin.play("coin_anim", true);
+    }
   }
   update() {
     this.background.tilePositionX += 1;
@@ -41,5 +71,9 @@ class Level1 extends Phaser.Scene {
     if(this.cursors.up.isDown){
       this.player.setVelocityY(-gameSettings.playerSpeed)
     }
+    //this.LoadCoins(); 
+  }
+  LoadCoins(){
+     
   }
 }
