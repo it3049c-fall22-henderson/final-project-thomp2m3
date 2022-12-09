@@ -10,11 +10,17 @@ class bootscreen extends Phaser.Scene {
     this.load.image('play-btn', './assets/play-btn-panel.png');
 
     this.load.image('about-btn', './assets/about-btn-panel.png');
+
+    this.load.audio('menu', './assets/music/menu/menu.wav');
   }
 
   create() {
     // Define width & height
     const { width, height } = this.scale;
+
+    // play music
+    let menuMusic = this.sound.add('menu', { loop: true });   
+    menuMusic.play();
 
     // Change background and border color
     var bg = document.getElementById('gameContainer');
@@ -42,6 +48,7 @@ class bootscreen extends Phaser.Scene {
       .setInteractive(this.input.makePixelPerfect())
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
         this.scene.start('playGameL1');
+        menuMusic.stop();
       });
 
     // Change hover color(s) on 'Play' button
@@ -65,6 +72,7 @@ class bootscreen extends Phaser.Scene {
       .setInteractive(this.input.makePixelPerfect())
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
         this.scene.start('aboutscreen');
+        
       });
 
     // Change hover color(s) on 'About' button
@@ -75,5 +83,8 @@ class bootscreen extends Phaser.Scene {
     btnAbout.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
       btnAbout.setTint(0xffffff);
     });
+
+    
+
   }
 }

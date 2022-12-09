@@ -11,6 +11,8 @@ class Level1 extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 16
   });
+    this.load.audio('gameplay', './assets/music/gameplay/gameplay.wav');
+    this.load.audio('gameover', './assets/music/gameover/gameover.wav');
   }
 
   
@@ -22,30 +24,8 @@ class Level1 extends Phaser.Scene {
     //Add player and controls
     this.player = this.physics.add.sprite(200,200, "player").setDisplaySize(80, 100);
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.player.setCollideWorldBounds(true);
-    //coin animation
-    this.anims.create({
-      key: "coin_anim",
-      frames: this.anims.generateFrameNumbers("coin",{
-        start: 0,
-        end: 3
-      }),
-      frameRate: 10,
-      repeat: -1
-    });
-    //random coins on the map
-    let coinsToSpawn = Phaser.Math.Between(5, 15);
-    for(let i = 0; i < coinsToSpawn; i++){
-      let yCord = Phaser.Math.Between(0, 600);
-      let xCord = Phaser.Math.Between(0, 800);
-      this.coin = this.add.sprite(xCord, yCord, "coin");
-      this.coin.play("coin_anim", true);
-    }
-    this.coin.touchable = true;
-    this.coin.setInteractive();
-    //score count
-    this.score = 0;
-    this.scoreLabel = this.add.bitmapText(15, 10, "pixelFont", "SCORE ", 30); 
+    this.player.setCollideWorldBounds(true);    
+    //this.createPlayer();
   }
   update() {
     this.background.tilePositionX += 1;
