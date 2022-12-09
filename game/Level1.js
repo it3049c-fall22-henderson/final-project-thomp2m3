@@ -11,13 +11,14 @@ class Level1 extends Phaser.Scene {
     // });
     this.load.image('player', './assets/Jetpack_Man/spriter_file_png_body_parts/guide.png');
   }
+
   
   create() {
     // Add background image to canvas
-    var bg = this.add.image(400, 300, 'background');
+    this.background = this.add.tileSprite(0, 0, 1920, 662, 'background');
+    this.background.setOrigin (0, 0);
+    
     this.add.sprite(200, 200, 'player').setDisplaySize(80, 100);
-    this.bg.autoScroll(-150,0);
-
     var me = this;
     me.cursors = me.game.input.keyboard.createCursorKeys();    
     me.tileSpeed = -450;
@@ -29,10 +30,12 @@ class Level1 extends Phaser.Scene {
       me.player.body.velocity.y -= 80;
     }
   }
-update(){
-  
-}
-  createPlayer(){
+
+  update() {
+    this.background.tilePositionX += 0.5;
+  }
+
+  createPlayer() {
     var me = this;
 
     me.player = me.game.add.image(me.game.world.centerX / 2, me.game.world.centerY, 'player');
