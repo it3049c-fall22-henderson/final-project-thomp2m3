@@ -40,21 +40,4 @@ class Level1 extends Phaser.Scene {
       this.player.setVelocityY(-gameSettings.playerSpeed)
     }
   }
-
-  createPlayer() {
-    var me = this;
-
-    me.player = me.game.add.image(me.game.world.centerX / 2, me.game.world.centerY, 'player');
-
-    me.player.anchor.setTo(0.5, 0.5);
-
-    me.game.physics.arcade.enable(me.player);
-
-    me.player.body.gravity.y = 2000;
-
-    me.player.body.collideWorldBounds = true;
-
-    me.player.body.immovable = true;
-  }
-
 }
