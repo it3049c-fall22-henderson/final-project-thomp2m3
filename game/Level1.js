@@ -11,14 +11,14 @@ class Level1 extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 16
   });
-    //this.load.audio('gameplay', './assets/music/gameplay/gameplay.wav');
-    //this.load.audio('gameover', './assets/music/gameover/gameover.wav');
+    this.load.audio('gameplay', './assets/music/gameplay/gameplay.wav');
+    this.load.audio('gameover', './assets/music/gameover/gameover.wav');
   }
 
   
   create() {
     // Add background image to canvas
-    this.background = this.add.tileSprite(0, 0, 1920, 662, 'background');
+    this.background = this.add.tileSprite(0, 0, 1920, 600, 'background');
     this.background.setOrigin (0, 0);
     //Add player and controls
     this.player = this.physics.add.sprite(200,200, "player").setDisplaySize(80, 100);
@@ -51,11 +51,14 @@ class Level1 extends Phaser.Scene {
     let coinsToSpawn = Phaser.Math.Between(5, 15);
     for(let i = 0; i < coinsToSpawn; i++){
        // Get Random y and x position
-       let yCord = Phaser.Math.Between(0, 600);
-       let xCord = Phaser.Math.Between(0, 900);
+       let yCord = Phaser.Math.Between(10, 600);
+       let xCord = Phaser.Math.Between(200, 900);
        this.coin = this.add.sprite(xCord, yCord, "coin");
        this.coin.play("coin_anim", true);
     }
+    //this.physics.add.collider(coin, player);
+    this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);  
+    this.cameras.main.startFollow(this.player); 
   }
   update() {
     this.background.tilePositionX += 1;
@@ -63,7 +66,7 @@ class Level1 extends Phaser.Scene {
       this.player.setVelocityX(gameSettings.playerSpeed);
     }
     if(this.cursors.left.isDown){
-      this.player.setVelocityX(-gameSettings.playerSpeed)
+      this.player.setVelocityX(-30)
     }
     if(this.cursors.down.isDown){
       this.player.setVelocityY(gameSettings.playerSpeed)
@@ -71,9 +74,5 @@ class Level1 extends Phaser.Scene {
     if(this.cursors.up.isDown){
       this.player.setVelocityY(-gameSettings.playerSpeed)
     }
-    //this.LoadCoins(); 
-  }
-  LoadCoins(){
-     
   }
 }
