@@ -8,6 +8,8 @@ class aboutscreen extends Phaser.Scene {
     this.load.image('title', './assets/title.png');
     
     this.load.image('back-btn', './assets/return-btn-panel.png');
+    this.load.audio('menu', './assets/music/menu/menu.wav');
+
   }
 
   create() {
@@ -57,5 +59,8 @@ class aboutscreen extends Phaser.Scene {
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
         this.scene.start('bootscreen');
       });
+
+    
+      
   }
 }

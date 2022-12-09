@@ -10,6 +10,8 @@ class Level1 extends Phaser.Scene {
     //   frameHeight: 20
     // });
     this.load.image('player', './assets/Jetpack_Man/spriter_file_png_body_parts/guide.png');
+    this.load.audio('gameplay', './assets/music/gameplay/gameplay.wav');
+    this.load.audio('gameover', './assets/music/gameover/gameover.wav');
   }
 
   
@@ -23,6 +25,11 @@ class Level1 extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.player.setCollideWorldBounds(true);    
     //this.createPlayer();
+
+    // play music
+    let gameplayMusic = this.sound.add('gameplay', { loop: true });
+    gameplayMusic.play();
+
   }
 
   update() {
