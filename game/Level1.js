@@ -5,11 +5,12 @@ class Level1 extends Phaser.Scene {
 
   preload() {
     this.load.image('background', './assets/level1BG.jpg');
-    // this.load.spritesheet('player', './assets/Jetpack_Man/spritesheets/_jet_pack_man_no_weapon_white_helmet_flying_die.png', {
-    //   frameWidth:20,
-    //   frameHeight: 20
-    // });
     this.load.image('player', './assets/Jetpack_Man/spriter_file_png_body_parts/guide.png');
+    this.load.bitmapFont("pixelFont", "./assets/font/font.png", "./assets/font/font.xml");
+    this.load.spritesheet('coin', './assets/coin.png', {
+      frameWidth: 16,
+      frameHeight: 16
+  });
   }
 
   
@@ -18,13 +19,34 @@ class Level1 extends Phaser.Scene {
     this.background = this.add.tileSprite(0, 0, 1920, 662, 'background');
     this.background.setOrigin (0, 0);
     
-    //this.player = this.add.image(200, 200, 'player').setDisplaySize(80, 100);
+    //Add player and controls
     this.player = this.physics.add.sprite(200,200, "player").setDisplaySize(80, 100);
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.player.setCollideWorldBounds(true);    
-    //this.createPlayer();
+    this.player.setCollideWorldBounds(true);
+    //coin animation
+    this.anims.create({
+      key: "coin_anim",
+      frames: this.anims.generateFrameNumbers("coin",{
+        start: 0,
+        end: 3
+      }),
+      frameRate: 10,
+      repeat: -1
+    });
+    //random coins on the map
+    let coinsToSpawn = Phaser.Math.Between(5, 15);
+    for(let i = 0; i < coinsToSpawn; i++){
+      let yCord = Phaser.Math.Between(0, 600);
+      let xCord = Phaser.Math.Between(0, 800);
+      this.coin = this.add.sprite(xCord, yCord, "coin");
+      this.coin.play("coin_anim", true);
+    }
+    this.coin.touchable = true;
+    this.coin.setInteractive();
+    //score count
+    this.score = 0;
+    this.scoreLabel = this.add.bitmapText(15, 10, "pixelFont", "SCORE ", 30); 
   }
-
   update() {
     this.background.tilePositionX += 1;
     if(this.cursors.right.isDown){
