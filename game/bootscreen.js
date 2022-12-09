@@ -11,7 +11,7 @@ class bootscreen extends Phaser.Scene {
 
     this.load.image('about-btn', './assets/about-btn-panel.png');
 
-    this.load.audio('menu', './assets/music/menu/menu.wav');
+    ///this.load.audio('menu', './assets/music/menu/menu.wav');
   }
 
   create() {
@@ -19,8 +19,8 @@ class bootscreen extends Phaser.Scene {
     const { width, height } = this.scale;
 
     // play music
-    let menuMusic = this.sound.add('menu', { loop: true });   
-    menuMusic.play();
+    // let menuMusic = this.sound.add('menu', { loop: true });   
+    // menuMusic.play();
 
     // Change background and border color
     var bg = document.getElementById('gameContainer');

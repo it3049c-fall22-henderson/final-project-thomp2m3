@@ -11,8 +11,8 @@ class Level1 extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 16
   });
-    this.load.audio('gameplay', './assets/music/gameplay/gameplay.wav');
-    this.load.audio('gameover', './assets/music/gameover/gameover.wav');
+    // this.load.audio('gameplay', './assets/music/gameplay/gameplay.wav');
+    // this.load.audio('gameover', './assets/music/gameover/gameover.wav');
   }
 
   
@@ -27,6 +27,8 @@ class Level1 extends Phaser.Scene {
     //score count
     this.score = 0;
     this.scoreLabel = this.add.bitmapText(15, 15, "pixelFont", "SCORE ", 30);
+    this.scoreLabel.scrollFactorX = 0
+    this.scoreLabel.scrollFactorY = 0
     //coin animation
     this.anims.create({
       key: "coin_anim",
@@ -61,7 +63,7 @@ class Level1 extends Phaser.Scene {
     this.cameras.main.startFollow(this.player); 
   }
   update() {
-    this.background.tilePositionX += 1;
+    //this.background.tilePositionX += 1;
     if(this.cursors.right.isDown){
       this.player.setVelocityX(gameSettings.playerSpeed);
     }
