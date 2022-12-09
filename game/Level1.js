@@ -18,21 +18,27 @@ class Level1 extends Phaser.Scene {
     this.background = this.add.tileSprite(0, 0, 1920, 662, 'background');
     this.background.setOrigin (0, 0);
     
-    this.add.sprite(200, 200, 'player').setDisplaySize(80, 100);
-    var me = this;
-    me.cursors = me.game.input.keyboard.createCursorKeys();    
-    me.tileSpeed = -450;
-    me.tileWidth = me.game.cache.getImage('tile').width;
-    me.tileHeight = me.game.cache.getImage('tile').height;
-    me.game.physics.startSystem(Phaser.Physics.ARCADE);
-    me.createPlayer();
-    if (me.cursors.up.isDown) {
-      me.player.body.velocity.y -= 80;
-    }
+    //this.player = this.add.image(200, 200, 'player').setDisplaySize(80, 100);
+    this.player = this.physics.add.sprite(200,200, "player").setDisplaySize(80, 100);
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.player.setCollideWorldBounds(true);    
+    //this.createPlayer();
   }
 
   update() {
-    this.background.tilePositionX += 0.5;
+    this.background.tilePositionX += 1;
+    if(this.cursors.right.isDown){
+      this.player.setVelocityX(gameSettings.playerSpeed);
+    }
+    if(this.cursors.left.isDown){
+      this.player.setVelocityX(-gameSettings.playerSpeed)
+    }
+    if(this.cursors.down.isDown){
+      this.player.setVelocityY(gameSettings.playerSpeed)
+    }
+    if(this.cursors.up.isDown){
+      this.player.setVelocityY(-gameSettings.playerSpeed)
+    }
   }
 
   createPlayer() {
