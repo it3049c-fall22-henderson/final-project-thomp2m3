@@ -84,13 +84,11 @@ class Level1 extends Phaser.Scene {
     //   frameRate: 20,
     //   repeat: 0
     // });
-    //timer for coins
-    timedEvent = this.time.addEvent({ 
-      delay: 2000, 
-      callback: this.spawnCoins, 
-      callbackScope: this, 
-      loop: true,
-    });
+    ////Generate random coins on map
+    this.points = this.physics.add.group();
+    setInterval( _ => {
+      this.loadCoins();
+  }, 2000);
     this.physics.add.collider(this.points, this.player, function(points, player){
       // this.score += 10;
       // var scoreFormatted = this.zeroPad(this.score, 6);
@@ -98,8 +96,8 @@ class Level1 extends Phaser.Scene {
       player.destroy();
   });
     //this.physics.add.collider(coin, player);
-    this.cameras.main.setBounds(0, 0, this.width, 600, true, true, true, true);
-    this.physics.world.setBounds(0, 0, this.width, 600, true, true, true, true);
+    this.cameras.main.setBounds(0, 0, this.width, 600, true, false, true, true);
+    this.physics.world.setBounds(0, 0, this.width, 600, true, false, true, true);
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
   }
   update() {
@@ -125,14 +123,12 @@ class Level1 extends Phaser.Scene {
       this.player.setVelocityY(-gameSettings.playerSpeed);
     }
   }
-  spawnCoins(){
-    //Generate random coins on map
-    this.points = this.physics.add.group();
-    let coinsToSpawn = Phaser.Math.Between(5, 15);
+  loadCoins(){
+  let coinsToSpawn = Phaser.Math.Between(5, 15);
     for (let i = 0; i < coinsToSpawn; i++) {
       // Get Random y and x position
-      let yCord = Phaser.Math.Between(10, 600);
-      let xCord = Phaser.Math.Between(200, 900);
+      let yCord = Phaser.Math.Between(10, 600); //-this.cameras.main.y, this.camera.main.y
+      let xCord = Phaser.Math.Between(200, screen.width); //-this.camera.main.x, this.camera.main.y
       this.coin = this.add.sprite(xCord, yCord, 'coin');
       //able to collect coins
       this.points.add(this.coin);
