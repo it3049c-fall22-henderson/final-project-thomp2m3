@@ -84,19 +84,13 @@ class Level1 extends Phaser.Scene {
     //   frameRate: 20,
     //   repeat: 0
     // });
-    ////Generate random coins on map
-    this.points = this.physics.add.group();
-    let coinsToSpawn = Phaser.Math.Between(5, 15);
-    for (let i = 0; i < coinsToSpawn; i++) {
-      // Get Random y and x position
-      let yCord = Phaser.Math.Between(10, 600);
-      let xCord = Phaser.Math.Between(200, 900);
-      this.coin = this.add.sprite(xCord, yCord, 'coin');
-      //able to collect coins
-      this.points.add(this.coin);
-      this.coin.setInteractive();
-      this.coin.play('coin_anim', true);
-    }
+    //timer for coins
+    timedEvent = this.time.addEvent({ 
+      delay: 2000, 
+      callback: this.spawnCoins, 
+      callbackScope: this, 
+      loop: true,
+    });
     this.physics.add.collider(this.points, this.player, function(points, player){
       // this.score += 10;
       // var scoreFormatted = this.zeroPad(this.score, 6);
@@ -129,6 +123,21 @@ class Level1 extends Phaser.Scene {
     }
     if (this.cursors.up.isDown) {
       this.player.setVelocityY(-gameSettings.playerSpeed);
+    }
+  }
+  spawnCoins(){
+    //Generate random coins on map
+    this.points = this.physics.add.group();
+    let coinsToSpawn = Phaser.Math.Between(5, 15);
+    for (let i = 0; i < coinsToSpawn; i++) {
+      // Get Random y and x position
+      let yCord = Phaser.Math.Between(10, 600);
+      let xCord = Phaser.Math.Between(200, 900);
+      this.coin = this.add.sprite(xCord, yCord, 'coin');
+      //able to collect coins
+      this.points.add(this.coin);
+      this.coin.setInteractive();
+      this.coin.play('coin_anim', true);
     }
   }
 }
