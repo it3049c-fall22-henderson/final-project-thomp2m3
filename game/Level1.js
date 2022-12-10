@@ -58,12 +58,12 @@ class Level1 extends Phaser.Scene {
     //score count ****(UNSURE IF SCORE COUNT IS DECLARED IN CREATE OR UPDATE BC IT WONT UPDATE)*****
     //*******SEE LINE 103-110********
 
-    // this.score = 0;
-    // this.scoreLabel = this.add.text(15, 15, 'SCORE:' + this.score,{
-    //   fontSize: '25pt',
-    //   fill: '#000',
-    // });
-    // this.scoreLabel.setScrollFactor(0, 0);
+    this.score = 0;
+    this.scoreLabel = this.add.text(15, 15, 'SCORE:' + this.score,{
+      fontSize: '25pt',
+      fill: '#000',
+    });
+    this.scoreLabel.setScrollFactor(0, 0);
     //coin animation
     this.anims.create({
       key: 'coin_anim',
@@ -124,7 +124,7 @@ class Level1 extends Phaser.Scene {
     }
   }
   loadCoins(){
-  let coinsToSpawn = Phaser.Math.Between(20, 50);
+  let coinsToSpawn = Phaser.Math.Between(5, 20);
     for (let i = 0; i < coinsToSpawn; i++) {
       // Get Random y and x position
       let yCord = Phaser.Math.Between(10, 600); //-this.cameras.main.y, this.camera.main.y
