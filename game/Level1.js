@@ -18,6 +18,7 @@ class Level1 extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 16,
     });
+    this.load.image("projectile", './assets/Obstacles/PNG/Projectile/2.png');
     // this.load.audio('gameplay', './assets/music/gameplay/gameplay.wav');
     // this.load.audio('gameover', './assets/music/gameover/gameover.wav');
   }
@@ -36,6 +37,14 @@ class Level1 extends Phaser.Scene {
     this.player = this.physics.add
       .sprite(200, 200, 'player')
       .setDisplaySize(80, 100);
+    //Projectiles (WORK IN PROGRESS)
+  //   this.projectile = this.add.sprite(config.width / 2 - 50, config.height / 2, "projectile");
+  //   this.projectiles = this.physics.add.group();
+  //   this.projectiles.add(this.projectile);
+  //   this.projectile.setInteractive();
+  //   this.physics.add.collider(this.projectiles, this.player, function(projectile, player){
+  //     player.destroy();
+  // });
     this.cursors = this.input.keyboard.createCursorKeys();
     this.player.setCollideWorldBounds(true);
     //score count
@@ -63,14 +72,21 @@ class Level1 extends Phaser.Scene {
     //   repeat: 0
     // });
     ////Generate random coins on map
+    this.points = this.physics.add.group();
     let coinsToSpawn = Phaser.Math.Between(5, 15);
     for (let i = 0; i < coinsToSpawn; i++) {
       // Get Random y and x position
       let yCord = Phaser.Math.Between(10, 600);
       let xCord = Phaser.Math.Between(200, 900);
       this.coin = this.add.sprite(xCord, yCord, 'coin');
+      //able to collect coins
+      this.points.add(this.coin);
+      this.coin.setInteractive();
       this.coin.play('coin_anim', true);
     }
+    this.physics.add.collider(this.points, this.player, function(points, player){
+      player.destroy();
+  });
     //this.physics.add.collider(coin, player);
     this.cameras.main.setBounds(0, 0, this.width, 600, true, true, true, true);
     this.physics.world.setBounds(0, 0, this.width, 600, true, true, true, true);
