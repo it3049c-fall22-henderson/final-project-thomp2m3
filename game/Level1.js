@@ -124,11 +124,11 @@ class Level1 extends Phaser.Scene {
     }
   }
   loadCoins(){
-  let coinsToSpawn = Phaser.Math.Between(5, 15);
+  let coinsToSpawn = Phaser.Math.Between(20, 50);
     for (let i = 0; i < coinsToSpawn; i++) {
       // Get Random y and x position
       let yCord = Phaser.Math.Between(10, 600); //-this.cameras.main.y, this.camera.main.y
-      let xCord = Phaser.Math.Between(200, screen.width); //-this.camera.main.x, this.camera.main.y
+      let xCord = Phaser.Math.Between(200, 20000); //-this.camera.main.x, this.camera.main.y
       this.coin = this.add.sprite(xCord, yCord, 'coin');
       //able to collect coins
       this.points.add(this.coin);
