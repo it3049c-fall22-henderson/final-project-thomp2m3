@@ -37,20 +37,33 @@ class Level1 extends Phaser.Scene {
     this.player = this.physics.add
       .sprite(200, 200, 'player')
       .setDisplaySize(80, 100);
-    //Projectiles (WORK IN PROGRESS)
-  //   this.projectile = this.add.sprite(config.width / 2 - 50, config.height / 2, "projectile");
-  //   this.projectiles = this.physics.add.group();
-  //   this.projectiles.add(this.projectile);
-  //   this.projectile.setInteractive();
-  //   this.physics.add.collider(this.projectiles, this.player, function(projectile, player){
-  //     player.destroy();
-  // });
+    //Projectiles ***(WORK IN PROGRESS)***
+    this.projectiles = this.physics.add.group();
+      let spawnProjectile = Phaser.Math.Between(0, 3);
+      for (let i = 0; i < spawnProjectile; i++) {
+        // Get Random y and x position
+        let yCord = Phaser.Math.Between(10, 600);
+        let xCord = Phaser.Math.Between(100, 1000);
+        this.projectile = this.add.sprite(xCord, yCord, 'projectile');
+        //able to collect coins
+        this.projectiles.add(this.projectile);
+        this.projectiles.tilePositionX -= 10;
+        this.projectile.setInteractive();
+      }
+    this.physics  .add.collider(this.projectiles, this.player, function(projectile, player){
+      player.destroy();
+  });
     this.cursors = this.input.keyboard.createCursorKeys();
     this.player.setCollideWorldBounds(true);
-    //score count
-    this.score = 0;
-    this.scoreLabel = this.add.bitmapText(15, 15, 'pixelFont', 'SCORE ', 30);
-    this.scoreLabel.setScrollFactor(0, 0);
+    //score count ****(UNSURE IF SCORE COUNT IS DECLARED IN CREATE OR UPDATE BC IT WONT UPDATE)*****
+    //*******SEE LINE 103-110********
+
+    // this.score = 0;
+    // this.scoreLabel = this.add.text(15, 15, 'SCORE:' + this.score,{
+    //   fontSize: '25pt',
+    //   fill: '#000',
+    // });
+    // this.scoreLabel.setScrollFactor(0, 0);
     //coin animation
     this.anims.create({
       key: 'coin_anim',
@@ -85,6 +98,9 @@ class Level1 extends Phaser.Scene {
       this.coin.play('coin_anim', true);
     }
     this.physics.add.collider(this.points, this.player, function(points, player){
+      // this.score += 10;
+      // var scoreFormatted = this.zeroPad(this.score, 6);
+      // this.scoreLabel.text = "SCORE " + scoreFormatted;
       player.destroy();
   });
     //this.physics.add.collider(coin, player);
@@ -93,6 +109,14 @@ class Level1 extends Phaser.Scene {
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
   }
   update() {
+    //score count
+    // this.score = 0;
+    // this.scoreLabel = this.add.text(15, 15, 'SCORE:' + this.score,{
+    //   fontSize: '25pt',
+    //   fill: '#000',
+    // });
+    // this.scoreLabel.setScrollFactor(0, 0);
+
     this.background.tilePositionX += 1;
     if(this.cursors.right.isDown){
       this.player.setVelocityX(gameSettings.playerSpeed);
