@@ -180,6 +180,7 @@ resetGear(gear){
     this.resetGear(gear);
     player.x = 300
     player.y = 300;
+    this.score = 0;
   }
   loadCoins(){
   let coinsToSpawn = Phaser.Math.Between(5, 20);
