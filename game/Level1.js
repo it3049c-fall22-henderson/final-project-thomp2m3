@@ -120,8 +120,11 @@ class Level1 extends Phaser.Scene {
       repeat: -1
     });
     this.gear.play("gear_animation");
+    //gear collision
+    this.gearPhysics = this.physics.add.group();
+    this.gearPhysics.add(this.gear);
 
-    this.physics.add.overlap(this.player, this.gear, this.gearCollide, null, this);
+    this.physics.add.overlap(this.player, this.gearPhysics, this.gearCollide, null, this);
     this.physics.add.overlap(this.player, this.points, this.addScore, null, this);
 
     this.score = 0;
@@ -195,8 +198,8 @@ resetGear(gear){
 
   // Player hits gear (on collision)
   gearCollide(player, gear){
-    resetGear(gear);
-    player.x = 9000
+    this.resetGear(gear);
+    player.x = 300
     player.y = 300;
   }
 
