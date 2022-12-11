@@ -109,30 +109,6 @@ class Level1 extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, this.width, 600, true, false, true, true);
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
 
-  //   this.physics.add.overlap(this.player, this.points, this.addScore, null, this);
-
-  //   this.score = 0;
-  //   var scoreFormatted = this.zeroPad(this.score, 6);
-  //   this.scoreLabel = this.add.bitmapText(10, 5, 'pixelFont', 'SCORE ' + scoreFormatted, 24);
-  //   this.scoreLabel.setScrollFactor(0, 0);
-  // }
-
-  // addScore(){
-  //   this.score += 10;
-  //   var scoreFormatted = this.zeroPad(this.score, 6);
-  //   this.scoreLabel.text = 'SCORE ' + scoreFormatted;
-  // }
-
-  // zeroPad(number, size){
-  //   var stringNumber = String(number);
-  //   while(stringNumber.length < (size || 2)){
-  //     stringNumber = '0' + stringNumber;
-      
-  //   }
-  //   return stringNumber;
-    
-
-
     // create gears
     let gearX = 1000;
     let gearY = Phaser.Math.Between(10, 600);
@@ -144,14 +120,29 @@ class Level1 extends Phaser.Scene {
       repeat: -1
     });
     this.gear.play("gear_animation");
-    this.physics.add.overlap(this.player, this.gear, this.gearCollide, null, this);
 
-  
-    
+    this.physics.add.overlap(this.player, this.gear, this.gearCollide, null, this);
+    this.physics.add.overlap(this.player, this.points, this.addScore, null, this);
+
+    this.score = 0;
+    var scoreFormatted = this.zeroPad(this.score, 6);
+    this.scoreLabel = this.add.bitmapText(10, 5, 'pixelFont', 'SCORE ' + scoreFormatted, 24);
+    this.scoreLabel.setScrollFactor(0, 0);
   }
 
+  addScore(){
+    this.score += 10;
+    var scoreFormatted = this.zeroPad(this.score, 6);
+    this.scoreLabel.text = 'SCORE ' + scoreFormatted;
+  }
 
-  
+  zeroPad(number, size){
+    var stringNumber = String(number);
+    while(stringNumber.length < (size || 2)){
+      stringNumber = '0' + stringNumber;
+    }
+    return stringNumber;
+  }
 
   update() {
     //score count
