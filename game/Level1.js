@@ -46,33 +46,23 @@ class Level1 extends Phaser.Scene {
       .sprite(200, 200, 'player')
       .setDisplaySize(80, 100);
     //Projectiles ***(WORK IN PROGRESS)***
-    this.projectiles = this.physics.add.group();
-      let spawnProjectile = Phaser.Math.Between(0, 3);
-      for (let i = 0; i < spawnProjectile; i++) {
-        // Get Random y and x position
-        let yCord = Phaser.Math.Between(10, 600);
-        let xCord = Phaser.Math.Between(100, 1000);
-        this.projectile = this.add.sprite(xCord, yCord, 'projectile');
-        //able to collect coins
-        this.projectiles.add(this.projectile);
-        this.projectiles.tilePositionX -= 10;
-        this.projectile.setInteractive();
-      }
-    this.physics  .add.collider(this.projectiles, this.player, function(projectile, player){
-      player.destroy();
-  });
+  //   this.projectiles = this.physics.add.group();
+  //     let spawnProjectile = Phaser.Math.Between(0, 3);
+  //     for (let i = 0; i < spawnProjectile; i++) {
+  //       // Get Random y and x position
+  //       let yCord = Phaser.Math.Between(10, 600);
+  //       let xCord = Phaser.Math.Between(100, 1000);
+  //       this.projectile = this.add.sprite(xCord, yCord, 'projectile');
+  //       //able to collect coins
+  //       this.projectiles.add(this.projectile);
+  //       this.projectiles.tilePositionX -= 10;
+  //       this.projectile.setInteractive();
+  //     }
+  //   this.physics  .add.collider(this.projectiles, this.player, function(projectile, player){
+  //     player.destroy();
+  // });
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.player.setCollideWorldBounds(true);
-    //score count ****(UNSURE IF SCORE COUNT IS DECLARED IN CREATE OR UPDATE BC IT WONT UPDATE)*****
-    //*******SEE LINE 103-110********
-
-    // this.score = 0;
-    // this.scoreLabel = this.add.text(15, 15, 'SCORE:' + this.score,{
-    //   fontSize: '25pt',
-    //   fill: '#000',
-    // });
-    // this.scoreLabel.setScrollFactor(0, 0);
-    
+    this.player.setCollideWorldBounds(true);    
     //coin animation
     this.anims.create({
       key: 'coin_anim',
@@ -83,25 +73,12 @@ class Level1 extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
-
-    // this.anims.create({
-    //   key: "coin_glitter",
-    //   frames: this.anims.generateFrameNumbers("coin", {
-    //     start: 4,
-    //     end: 7
-    //   }),
-    //   frameRate: 20,
-    //   repeat: 0
-    // });
     ////Generate random coins on map
     this.points = this.physics.add.group();
     setInterval( _ => {
       this.loadCoins();
   }, 2000);
     this.physics.add.collider(this.points, this.player, function(points, player){
-      // this.score += 10;
-      // var scoreFormatted = this.zeroPad(this.score, 6);
-      // this.scoreLabel.text = "SCORE " + scoreFormatted;
       player.destroy();
   });
     //this.physics.add.collider(coin, player);
@@ -132,13 +109,11 @@ class Level1 extends Phaser.Scene {
     this.scoreLabel = this.add.bitmapText(10, 5, 'pixelFont', 'SCORE ' + scoreFormatted, 24);
     this.scoreLabel.setScrollFactor(0, 0);
   }
-
   addScore(){
     this.score += 10;
     var scoreFormatted = this.zeroPad(this.score, 6);
     this.scoreLabel.text = 'SCORE ' + scoreFormatted;
   }
-
   zeroPad(number, size){
     var stringNumber = String(number);
     while(stringNumber.length < (size || 2)){
@@ -169,15 +144,10 @@ class Level1 extends Phaser.Scene {
     if (this.cursors.up.isDown) {
       this.player.setVelocityY(-gameSettings.playerSpeed);
     }
-
     // gear movement
-    this.gearProjectile(this.gear, 8);
-
-   
+    this.gearProjectile(this.gear, 8);   
   }
-
   gearIteration = 1;
-  
 
 // gear reset
 resetGear(gear){
@@ -186,7 +156,6 @@ resetGear(gear){
   let randomY = Phaser.Math.Between(10, 600);
   gear.y = randomY;
 }
-
   // gear functionality
   gearProjectile(gear, speed) {
     gear.x = gear.x - speed;
@@ -195,18 +164,12 @@ resetGear(gear){
       this.resetGear(gear);
     }
 }
-
   // Player hits gear (on collision)
   gearCollide(player, gear){
     this.resetGear(gear);
     player.x = 300
     player.y = 300;
   }
-
-  
-
-
-
   loadCoins(){
   let coinsToSpawn = Phaser.Math.Between(5, 20);
     for (let i = 0; i < coinsToSpawn; i++) {
