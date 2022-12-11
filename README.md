@@ -2,14 +2,18 @@
 
 ## Checklist:
 
-- [ ] fill out the self evaluation and Reflection
-- [ ] setup github pages for this project
-- [ ] submit the repository link on Canvas
+- [x] fill out the self evaluation and Reflection
+- [x] setup github pages for this project
+- [x] submit the repository link on Canvas
 
 ## Self-Evaluation:
 
-how many points out of 105 do you deserve on this assignment:
+how many points out of 105 do you deserve on this assignment: 105/105
 
 ## Self-Reflection:
 
-### How long it took me to finish this?
+Self reflection is contained within the Teams video link submitted on Canvas
+
+### How long it took me to finish this? 
+
+Collectively as a group, we spent approximately two weeks on this project overall.
