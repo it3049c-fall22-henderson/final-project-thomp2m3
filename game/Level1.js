@@ -19,8 +19,16 @@ class Level1 extends Phaser.Scene {
       frameHeight: 16,
     });
     this.load.image("projectile", './assets/Obstacles/PNG/Projectile/2.png');
+
+    
     // this.load.audio('gameplay', './assets/music/gameplay/gameplay.wav');
     // this.load.audio('gameover', './assets/music/gameover/gameover.wav');
+
+    this.load.spritesheet('gear', './assets/Obstacles/PNG/Sprite_Gear/gear_ani.png', {
+      frameWidth: 200,
+      frameHeight: 200,
+    });
+
   }
 
   create() {
@@ -58,12 +66,12 @@ class Level1 extends Phaser.Scene {
     //score count ****(UNSURE IF SCORE COUNT IS DECLARED IN CREATE OR UPDATE BC IT WONT UPDATE)*****
     //*******SEE LINE 103-110********
 
-    this.score = 0;
-    this.scoreLabel = this.add.text(15, 15, 'SCORE:' + this.score,{
-      fontSize: '25pt',
-      fill: '#000',
-    });
-    this.scoreLabel.setScrollFactor(0, 0);
+    // this.score = 0;
+    // this.scoreLabel = this.add.text(15, 15, 'SCORE:' + this.score,{
+    //   fontSize: '25pt',
+    //   fill: '#000',
+    // });
+    // this.scoreLabel.setScrollFactor(0, 0);
     //coin animation
     this.anims.create({
       key: 'coin_anim',
@@ -99,7 +107,51 @@ class Level1 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, this.width, 600, true, false, true, true);
     this.physics.world.setBounds(0, 0, this.width, 600, true, false, true, true);
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
+
+  //   this.physics.add.overlap(this.player, this.points, this.addScore, null, this);
+
+  //   this.score = 0;
+  //   var scoreFormatted = this.zeroPad(this.score, 6);
+  //   this.scoreLabel = this.add.bitmapText(10, 5, 'pixelFont', 'SCORE ' + scoreFormatted, 24);
+  //   this.scoreLabel.setScrollFactor(0, 0);
+  // }
+
+  // addScore(){
+  //   this.score += 10;
+  //   var scoreFormatted = this.zeroPad(this.score, 6);
+  //   this.scoreLabel.text = 'SCORE ' + scoreFormatted;
+  // }
+
+  // zeroPad(number, size){
+  //   var stringNumber = String(number);
+  //   while(stringNumber.length < (size || 2)){
+  //     stringNumber = '0' + stringNumber;
+      
+  //   }
+  //   return stringNumber;
+    
+
+
+    // create gears
+    let gearX = 1000;
+    let gearY = Phaser.Math.Between(10, 600);
+    this.gear = this.add.sprite(gearX, gearY, "gear");
+    this.anims.create({
+      key: "gear_animation",
+      frames: this.anims.generateFrameNumbers("gear"),
+      frameRate: 24,
+      repeat: -1
+    });
+    this.gear.play("gear_animation");
+    this.physics.add.overlap(this.player, this.gear, this.gearCollide, null, this);
+
+  
+    
   }
+
+
+  
+
   update() {
     //score count
     // this.score = 0;
@@ -122,7 +174,44 @@ class Level1 extends Phaser.Scene {
     if (this.cursors.up.isDown) {
       this.player.setVelocityY(-gameSettings.playerSpeed);
     }
+
+    // gear movement
+    this.gearProjectile(this.gear, 8);
+
+   
   }
+
+  gearIteration = 1;
+  
+
+// gear reset
+resetGear(gear){
+  this.gearIteration++;
+  gear.x = 1000*this.gearIteration;
+  let randomY = Phaser.Math.Between(10, 600);
+  gear.y = randomY;
+}
+
+  // gear functionality
+  gearProjectile(gear, speed) {
+    gear.x = gear.x - speed;
+    
+    if(gear.x === 0) {
+      this.resetGear(gear);
+    }
+}
+
+  // Player hits gear (on collision)
+  gearCollide(player, gear){
+    resetGear(gear);
+    player.x = 9000
+    player.y = 300;
+  }
+
+  
+
+
+
   loadCoins(){
   let coinsToSpawn = Phaser.Math.Between(5, 20);
     for (let i = 0; i < coinsToSpawn; i++) {
@@ -136,4 +225,7 @@ class Level1 extends Phaser.Scene {
       this.coin.play('coin_anim', true);
     }
   }
+
+  
+
 }
