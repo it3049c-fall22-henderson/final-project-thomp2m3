@@ -72,6 +72,7 @@ class Level1 extends Phaser.Scene {
     //   fill: '#000',
     // });
     // this.scoreLabel.setScrollFactor(0, 0);
+    
     //coin animation
     this.anims.create({
       key: 'coin_anim',
