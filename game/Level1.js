@@ -98,12 +98,12 @@ class Level1 extends Phaser.Scene {
     setInterval( _ => {
       this.loadCoins();
   }, 2000);
-    this.physics.add.collider(this.points, this.player, function(points, player){
+    //this.physics.add.overlap(this.points, this.player, this.addScore, null, this);
       // this.score += 10;
       // var scoreFormatted = this.zeroPad(this.score, 6);
       // this.scoreLabel.text = "SCORE " + scoreFormatted;
-      player.destroy();
-  });
+      // player.destroy();
+  
     //this.physics.add.collider(coin, player);
     this.cameras.main.setBounds(0, 0, this.width, 600, true, false, true, true);
     this.physics.world.setBounds(0, 0, this.width, 600, true, false, true, true);
@@ -133,10 +133,12 @@ class Level1 extends Phaser.Scene {
     this.scoreLabel.setScrollFactor(0, 0);
   }
 
-  addScore(){
+  addScore(coin, player){
     this.score += 10;
     var scoreFormatted = this.zeroPad(this.score, 6);
     this.scoreLabel.text = 'SCORE ' + scoreFormatted;
+    //coin.disableBody(true, true);
+    player.destroy();
   }
 
   zeroPad(number, size){
@@ -146,6 +148,8 @@ class Level1 extends Phaser.Scene {
     }
     return stringNumber;
   }
+
+  
 
   update() {
     //score count
@@ -178,6 +182,8 @@ class Level1 extends Phaser.Scene {
 
   gearIteration = 1;
   
+  
+
 
 // gear reset
 resetGear(gear){
