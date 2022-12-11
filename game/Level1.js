@@ -58,12 +58,12 @@ class Level1 extends Phaser.Scene {
     //score count ****(UNSURE IF SCORE COUNT IS DECLARED IN CREATE OR UPDATE BC IT WONT UPDATE)*****
     //*******SEE LINE 103-110********
 
-    this.score = 0;
-    this.scoreLabel = this.add.text(15, 15, 'SCORE:' + this.score,{
-      fontSize: '25pt',
-      fill: '#000',
-    });
-    this.scoreLabel.setScrollFactor(0, 0);
+    // this.score = 0;
+    // this.scoreLabel = this.add.text(15, 15, 'SCORE:' + this.score,{
+    //   fontSize: '25pt',
+    //   fill: '#000',
+    // });
+
     //coin animation
     this.anims.create({
       key: 'coin_anim',
@@ -99,7 +99,29 @@ class Level1 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, this.width, 600, true, false, true, true);
     this.physics.world.setBounds(0, 0, this.width, 600, true, false, true, true);
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
+
+    this.physics.add.overlap(this.player, this.points, this.addScore, null, this);
+
+    this.score = 0;
+    var scoreFormatted = this.zeroPad(this.score, 6);
+    this.scoreLabel = this.add.bitmapText(10, 5, 'pixelFont', 'SCORE ' + scoreFormatted, 24);
+    this.scoreLabel.setScrollFactor(0, 0);
   }
+
+  addScore(){
+    this.score += 10;
+    var scoreFormatted = this.zeroPad(this.score, 6);
+    this.scoreLabel.text = 'SCORE ' + scoreFormatted;
+  }
+
+  zeroPad(number, size){
+    var stringNumber = String(number);
+    while(stringNumber.length < (size || 2)){
+      stringNumber = '0' + stringNumber;
+    }
+    return stringNumber;
+  }
+  
   update() {
     //score count
     // this.score = 0;
